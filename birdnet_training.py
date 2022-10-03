@@ -13,7 +13,7 @@ from tensorflow.keras.layers import Input, Dense, Conv2D, Conv2DTranspose, UpSam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import Adam
 import numpy as np
-from .data_processing import readAudioData, splitSignal
+from data_processing import readAudioData, splitSignal
 from sklearn.model_selection import StratifiedShuffleSplit
 from collections import Counter
 from sklearn.metrics import classification_report, roc_auc_score, roc_curve
@@ -159,7 +159,7 @@ class ValidDataset(keras.utils.Sequence):
 
 
 def create_dataset(df, species_of_interests):
-    df["y"] = df["MANUAL ID"].apply(lambda x: species_of_interests.index(x))
+    df["y"] = df["MANUAL ID"].apply(lambda x: list(species_of_interests).index(x))
     df
 
     X = []

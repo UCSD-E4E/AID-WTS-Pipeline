@@ -4,10 +4,10 @@ from matplotlib import pyplot as plt
 import torch
 
 from torch.utils.data import DataLoader
-from network import TweetyNet
-from EvaluationFunctions import frame_error, syllable_edit_distance
+from .network import TweetyNet
+from .EvaluationFunctions import frame_error, syllable_edit_distance
 from microfaune.audio import wav2spc, create_spec, load_wav
-from CustomAudioDataset import CustomAudioDataset
+from .CustomAudioDataset import CustomAudioDataset
 from datetime import datetime
 
 
