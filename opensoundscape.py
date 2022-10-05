@@ -122,7 +122,7 @@ def prep_data(df, ef, name = "autoamted_cosmos_tweety_to_file", THIS_IS_NEW_DATA
     df["IN FILE"] = df["IN FILE"].apply(fix_folder_path)
     df
 
-    if (False):
+    if (True):
         from opensoundscape.audio import Audio
         clip_duration = 3
         clip_overlap = 0
@@ -176,7 +176,7 @@ def prep_data(df, ef, name = "autoamted_cosmos_tweety_to_file", THIS_IS_NEW_DATA
 
         print(df_split_save)
 
-    !pip install pydub
+   
     from opensoundscape.audio import Audio
     from pydub import AudioSegment
     #AudioSegment.converter = "C:/Users/Siloux/Downloads/ffmpeg-master-latest-win64-gpl/ffmpeg-master-latest-win64-gpl/bin/ffmpeg.exe"
@@ -269,10 +269,12 @@ def prep_data(df, ef, name = "autoamted_cosmos_tweety_to_file", THIS_IS_NEW_DATA
 
     df_split_save2.to_csv(train_name) 
 
-def run_training():
+    return df_split_save2, ef_split_save
+
+def run_training(training_df, testing_df):
     name = "autoamted_cosmos_tweety_to_file"
-    train_val_df = pd.read_csv(name + '_TRAINING.csv')
-    test_df = pd.read_csv(name + '_TESTING.csv')
+    train_val_df = training_df
+    test_df = testing_df
     model_save = './model/' + name  + '_no_none_class/'
     train_val_df["filename"] = train_val_df["file"].apply(lambda x: x.split("/")[-1])
     test_df["filename"] = test_df["file"].apply(lambda x: x.split("/")[-1])
@@ -340,7 +342,7 @@ def run_training():
     plt.title('Plot of Loss vs Epochs')
     plt.show()
 
-    return model
+    return model, test_df
 
 def testing(model, test_df):
     prediction_dataset = model.train_dataset.sample(n=0)

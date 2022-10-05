@@ -41,6 +41,7 @@ def readAudioData(path, overlap, sample_rate=48000):
 
 from birdnet_training import birdnet_testing, birdnet_training
 from tweetynet_training import tweetynet_training
+from opensoundscape import prep_data, run_training, testing
 
 def general_training_testing(chunked_df, manual_df, species_of_interests, 
                         model="birdnet",
@@ -62,7 +63,9 @@ def general_training_testing(chunked_df, manual_df, species_of_interests,
         return tweetynet_training(chunked_df, manual_df, species_of_interests)
         pass
     elif(model == "opensoundscape"):
-        #TODO
-        pass
+        df_split_save2, ef_split_save = prep_data(chunked_df, manual_df)
+        model, test_df = run_training(df_split_save2, ef_split_save)
+        return testing(model, test_df)
+        
     else:
         print("please set model to birdnet, tweetynet, or opensoundscape")
